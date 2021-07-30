@@ -1,5 +1,6 @@
 {
   "name": "wenmin-book",
+  "proxy": "https://tracker-api-wen.herokuapp.com",
   "version": "1.0.0",
   "main": "index.js",
   "engines": {
