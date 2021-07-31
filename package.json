@@ -18,11 +18,11 @@
     "watch-server-hmr": "webpack -w --config webpack.serverHMR.js",
     "#dev-all": "Dev mode: watch for server changes and start UI server",
     "dev-all": "rm dist/* && npm run watch-server-hmr & sleep 5 && npm start",
-    "heroku_postbuild": "npm run compile && ln -fs ../node_modules/bootstrap/dist public/bootstrap"
+    "heroku-postbuild": "npm run compile && ln -fs ../node_modules/bootstrap/dist public/bootstrap"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.ccs.neu.edu/NEU-CS5610-SU21/WenMin-Book.git"
+    "url": "git+https://github.com/BugmakerWen/tracker-ui.git"
   },
   "author": "",
   "license": "ISC",
