@@ -1,5 +1,5 @@
 import React from 'react';
-import SelectAsync from 'react-select/lib/Async';
+import SelectAsync from 'react-select/lib/Async'; // eslint-disable-line
 import { withRouter } from 'react-router-dom';
 
 import graphQLFetch from './graphQLFetch.js';
@@ -8,7 +8,8 @@ import withToast from './withToast.jsx';
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    this.onChangeSlection = this.onChangeSelection.bind(this);
+
+    this.onChangeSelection = this.onChangeSelection.bind(this);
     this.loadOptions = this.loadOptions.bind(this);
   }
 

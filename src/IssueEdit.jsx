@@ -5,13 +5,13 @@ import {
   Col, Panel, Form, FormGroup, FormControl, ControlLabel,
   ButtonToolbar, Button, Alert,
 } from 'react-bootstrap';
-import withToast from './withToast.jsx';
-import store from './store.js';
 
 import graphQLFetch from './graphQLFetch.js';
 import NumInput from './NumInput.jsx';
 import DateInput from './DateInput.jsx';
 import TextInput from './TextInput.jsx';
+import withToast from './withToast.jsx';
+import store from './store.js';
 import UserContext from './UserContext.js';
 
 class IssueEdit extends React.Component {
@@ -40,6 +40,8 @@ class IssueEdit extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onValidityChange = this.onValidityChange.bind(this);
+    this.dismissValidation = this.dismissValidation.bind(this);
+    this.showValidation = this.showValidation.bind(this);
   }
 
   componentDidMount() {
@@ -72,12 +74,12 @@ class IssueEdit extends React.Component {
     });
   }
 
-  /* TM 3-13-20 */
   async handleSubmit(e) {
     e.preventDefault();
     this.showValidation();
     const { issue, invalidFields } = this.state;
     if (Object.keys(invalidFields).length !== 0) return;
+
     const query = `mutation issueUpdate(
       $id: Int!
       $changes: IssueUpdateInputs!
@@ -122,7 +124,7 @@ class IssueEdit extends React.Component {
     const { match: { params: { id: propsId } } } = this.props;
     if (id == null) {
       if (propsId != null) {
-        return <h3>{`Issue with ID ${propsId} not  found.`}</h3>;
+        return <h3>{`Issue with ID ${propsId} not found.`}</h3>;
       }
       return null;
     }
@@ -132,13 +134,15 @@ class IssueEdit extends React.Component {
     if (Object.keys(invalidFields).length !== 0 && showingValidation) {
       validationMessage = (
         <Alert bsStyle="danger" onDismiss={this.dismissValidation}>
-           Please correct invalid fields before submitting.
+          Please correct invalid fields before submitting.
         </Alert>
       );
     }
+
     const { issue: { title, status } } = this.state;
     const { issue: { owner, effort, description } } = this.state;
     const { issue: { created, due } } = this.state;
+
     const user = this.context;
 
     return (
@@ -149,9 +153,7 @@ class IssueEdit extends React.Component {
         <Panel.Body>
           <Form horizontal onSubmit={this.handleSubmit}>
             <FormGroup>
-              <Col componentClass={ControlLabel} sm={3}>
-                Created
-              </Col>
+              <Col componentClass={ControlLabel} sm={3}>Created</Col>
               <Col sm={9}>
                 <FormControl.Static>
                   {created.toDateString()}
